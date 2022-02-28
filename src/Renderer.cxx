@@ -4,6 +4,11 @@ Engine::Renderer::Renderer(Window* window) {
 	m_Window = window;
 	glfwMakeContextCurrent(window->GetGLFWwindow());
 	gladLoadGL();
+
+	glEnable(GL_DEPTH_TEST);
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
 }
 
 Engine::Renderer::~Renderer() {
@@ -12,7 +17,7 @@ Engine::Renderer::~Renderer() {
 
 void Engine::Renderer::ClearColor(float r, float g, float b) {
 	check(glClearColor(r/255.0f, g/255.0f, b/255.0f, 1.0f));
-	check(glClear(GL_COLOR_BUFFER_BIT));
+	check(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 }
 
 void Engine::Renderer::DrawArrays(int count) {

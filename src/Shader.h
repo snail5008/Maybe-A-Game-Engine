@@ -31,5 +31,6 @@ namespace Engine {
 
 		void SetUniform1f(int location, float data);
 		void SetUniform1i(int location, float data);
+		void SetUniformMatrix4f(int location, float* data);
 	};
 }

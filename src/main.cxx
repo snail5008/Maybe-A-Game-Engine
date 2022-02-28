@@ -1,70 +1,74 @@
-#include <string>
+#include "Window.h"
+#include "Renderer.h"
+#include "Shader.h"
+#include "Mesh.h"
+#include "Texture.h"
+
+#include "InputOutput.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Window.h" // include Window.h first
-#include "Renderer.h"
-#include "Shader.h"
-#include "InputOutput.h"
-#include "Mesh.h"
-#include "Texture.h"
-
-#include "Logger.h"
-#include "Formatter.h"
-
-int WIDTH = 800;
-int HEIGHT = 600;
-std::string TITLE = "OpenGL";
-
-GLfloat triangle[] = {
-/*       positions           colours       texture coords       */
-	 0.5f,  0.5f, 0.5f,  1.0f, 0.0f, 0.0f,  1.0f, 1.0f,  // 0 ^>
-	 0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  1.0f, 0.0f,  // 1 v>
-	-0.5f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  0.0f, 1.0f,  // 2 <^
-	-0.5f, -0.5f, 0.0f,  1.0f, 1.0f, 0.0f,  0.0f, 0.0f,  // 3 <v
+float quad[] = {
+	 0.5f,  0.5f, 0.0f,  1.0f, 1.0f,  // 0 ^>
+	 0.5f, -0.5f, 0.5f,  1.0f, 0.0f,  // 1 v>
+	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,  // 2 <v
+	-0.5f,  0.5f, 0.0f,  0.0f, 1.0f,  // 3 <^
 };
 
-GLuint triangle_indices[] = {
-	0, 1, 3,
-	2, 0, 3
+unsigned int quad_indices[] = {
+	0, 1, 2,
+	3, 0, 2,
 };
-
-void LogDebugInfo() {
-	Engine::Logger::Info(Engine::Format("OpenGL version: #c", (const char*)glGetString(GL_VERSION)));
-}
 
 int main() {
-	Engine::Window Window(WIDTH, HEIGHT, TITLE);
+	Engine::Window Window(800, 600, "OpenGL");
 	Engine::Renderer Renderer(&Window);
 	Engine::Shader Shader;
 	Engine::Mesh3D Mesh;
-
-	Window.EnableVsync();
-
+	
 	Shader.Compile(Engine::IO::ReadFile("res/default_vertex.glsl"), Engine::IO::ReadFile("res/default_fragment.glsl"));
 	Shader.Use();
 
-	LogDebugInfo();
+	Mesh.SetVertexData(quad, sizeof(quad), GL_STATIC_DRAW);
+	Mesh.SetIndices(quad_indices, sizeof(quad_indices), GL_STATIC_DRAW);
+	Mesh.AddAttribute(3, 5 * sizeof(float), (void*)0);
+	Mesh.AddAttribute(2, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 
-	Mesh.SetVertexData(triangle, sizeof(triangle), GL_STATIC_DRAW);
-	Mesh.SetIndices(triangle_indices, sizeof(triangle_indices), GL_STATIC_DRAW);
-	Mesh.AddAttribute(3, 8 * sizeof(GLfloat), (void*)0);
-	Mesh.AddAttribute(3, 8 * sizeof(GLfloat), (void*)(3 * sizeof(float)));
-	Mesh.AddAttribute(2, 8 * sizeof(GLfloat), (void*)(6 * sizeof(float)));
+	glm::mat4 Model = glm::mat4(1.0f);
+	//glm::mat4 View = glm::mat4(1.0f);
+	glm::mat4 Projection = glm::mat4(1.0f);
+
+	Window.EnableVsync();
+
+	int ModelLocation = Shader.GetUniformLocation("model");
+	int ViewLocation = Shader.GetUniformLocation("view");
+	int ProjectionLocation = Shader.GetUniformLocation("projection");
 
 	Engine::Texture Texture("res/textures/shrek.png");
 	Texture.Bind();
 
-	GLuint texUniform = Shader.GetUniformLocation("tex");
-	Shader.SetUniform1i(texUniform, 0);
+	int TexUniform = Shader.GetUniformLocation("tex");
+	Shader.SetUniform1i(TexUniform, 0);
 
 	while (!Window.ShouldClose()) {
 		Renderer.ClearColor(50, 50, 50);
 		Renderer.DrawMesh3D(Mesh, 6);
 
+		//View = glm::translate(View, glm::vec3(0.0f, 0.5f, 1.0f));
+		//Model = glm::rotate(Model, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+		Projection = glm::perspective(glm::radians(90.0f), 800.0f/600.0f, 0.1f, 1000.0f);
+
+		Engine::Logger::Info(Engine::Format("glfwGetTime(): #f", glfwGetTime()));
+		Model = glm::rotate(Model, glm::radians(10.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+
+		Shader.SetUniformMatrix4f(ModelLocation, glm::value_ptr(Model));
+		//Shader.SetUniformMatrix4f(ViewLocation, glm::value_ptr(View));
+		Shader.SetUniformMatrix4f(ProjectionLocation, glm::value_ptr(Projection));
+
 		Window.Update();
 	}
-
-	return 0;
 }

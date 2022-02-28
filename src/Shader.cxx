@@ -76,3 +76,7 @@ void Engine::Shader::SetUniform1f(int location, float data) {
 void Engine::Shader::SetUniform1i(int location, float data) {
 	check(glUniform1i(location, data));
 }
+
+void Engine::Shader::SetUniformMatrix4f(int location, float* data) {
+	check(glUniformMatrix4fv(location, 1, GL_FALSE, data));
+}
