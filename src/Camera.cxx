@@ -18,3 +18,15 @@ void Engine::Camera::SetMatrices(float fov, float near, float far, float w, floa
 
 	shader.SetUniformMatrix4f(shader.GetUniformLocation(uniform), (float*)glm::value_ptr(Projection * View));
 }
+
+void Engine::Camera::RotateX(float amount) {
+	Direction = glm::rotate(Direction, amount, glm::vec3(1.0f, 0.0f, 0.0f));
+}
+
+void Engine::Camera::RotateY(float amount) {
+	Direction = glm::rotate(Direction, amount, glm::vec3(0.0f, 1.0f, 0.0f));
+}
+
+void Engine::Camera::RotateZ(float amount) {
+	Direction = glm::rotate(Direction, amount, glm::vec3(0.0f, 0.0f, 1.0f));
+}

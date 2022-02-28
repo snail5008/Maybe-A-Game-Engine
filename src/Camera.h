@@ -19,6 +19,7 @@ namespace Engine {
 		glm::vec3 Position;
 		glm::vec3 Direction = glm::vec3(0.0f, 0.0f, -1.0f);
 		glm::vec3 Up = glm::vec3(0.0f, 1.0f, 0.0f);
+		glm::vec3 Rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
 		int Width;
 		int Height;
@@ -26,5 +27,8 @@ namespace Engine {
 		Camera(glm::vec3 pos);
 
 		void SetMatrices(float fov, float near, float far, float w, float h, Shader& shader, const char* uniform);
+		void RotateX(float amount);
+		void RotateY(float amount);
+		void RotateZ(float amount);
 	};
 }
