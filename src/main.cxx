@@ -10,6 +10,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <ctime>
+#include <cstdlib>
 
 float quad[] = {
 //       positions         tex coords
@@ -96,7 +98,7 @@ int main() {
 	Window.EnableVsync();
 
 
-	Engine::Texture Texture("res/textures/stone.png");
+	Engine::Texture Texture("res/textures/stone.png", GL_RGB);
 	Texture.Bind();
 
 	int ModelLocation = Shader.GetUniformLocation("model");
@@ -104,17 +106,41 @@ int main() {
 	Shader.SetUniform1i(TexUniform, 0);
 
 
+	srand((unsigned int)time(NULL));
+	glm::vec3 cubePositions[1000];
+	
+	for (int i = 0; i < 999; i++) {
+		float x = (rand() / float(RAND_MAX) * 100.0f);
+		float y = (rand() / float(RAND_MAX) * 100.0f);
+		float z = (rand() / float(RAND_MAX) * 100.0f);
+		cubePositions[i] = glm::vec3(x, y, z);
+	}
+
+
 	double OldMouseX = Window.GetMouseX();
 	double OldMouseY = Window.GetMouseY();
 	float yaw = 0.0f;
 	float pitch = 0.0f;
+	float speed = 0.05f;
 	while (!Window.ShouldClose()) {
 
 		OldMouseX = Window.GetMouseX();
 		OldMouseY = Window.GetMouseY();
 
 		Renderer.ClearColor(50, 50, 50);
-		Renderer.DrawMesh3D(Mesh, 36);
+
+		//Renderer.DrawMesh3D(Mesh, 36);
+
+		for (unsigned int i = 0; i < 999; i++)
+		{
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, cubePositions[i]);
+			float angle = 20.0f * i;
+			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+			Shader.SetUniformMatrix4f(Shader.GetUniformLocation("model"), glm::value_ptr(model));
+
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
 
 		Camera.SetMatrices(glm::radians(FOV), 0.1f, 100.0f, Window.GetWidth(), Window.GetHeight(), Shader, "transform");
 
@@ -133,9 +159,14 @@ int main() {
 		}
 
 		if (IS_CAPTURED) {
-			// shamelessly copied and pased from learnopengl.com
+			// shamelessly copied and pased from learnopengl.com lol
 			yaw += (float)(Window.GetMouseX() - OldMouseX) * SENSITIVITY;
-			pitch += (float)(Window.GetMouseY() - OldMouseY) * SENSITIVITY;
+			pitch -= (float)(Window.GetMouseY() - OldMouseY) * SENSITIVITY;
+
+			if (pitch > 89.0f)
+				pitch = 89.0f;
+			if (pitch < -89.0f)
+				pitch = -89.0f;
 
 			Camera.Direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
 			Camera.Direction.y = sin(glm::radians(pitch));
@@ -143,7 +174,6 @@ int main() {
 		}
 
 
-		float speed = 0.05f;
 		if (glfwGetKey(Window.GetGLFWwindow(), GLFW_KEY_W) == GLFW_PRESS) {
 			Camera.Position += Camera.Direction * speed;
 		}
@@ -155,6 +185,18 @@ int main() {
 		}
 		if (glfwGetKey(Window.GetGLFWwindow(), GLFW_KEY_D) == GLFW_PRESS) {
 			Camera.Position += glm::normalize(glm::cross(Camera.Direction, Camera.Up)) * speed;
+		}
+		if (glfwGetKey(Window.GetGLFWwindow(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+			Camera.Position.y -= speed;
+		}
+		if (glfwGetKey(Window.GetGLFWwindow(), GLFW_KEY_SPACE) == GLFW_PRESS) {
+			Camera.Position.y += speed;
+		}
+		if (glfwGetKey(Window.GetGLFWwindow(), GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
+			speed = 0.5f;
+		}
+		else {
+			speed = 0.05f;
 		}
 
 		int state = glfwGetMouseButton(Window.GetGLFWwindow(), GLFW_MOUSE_BUTTON_LEFT);
