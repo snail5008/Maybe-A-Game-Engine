@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-Engine::Texture::Texture(const char* image_path) {
+Engine::Texture::Texture(const char* image_path, int image_type) {
 	stbi_set_flip_vertically_on_load(true);
 
 	int ImageWidth, ImageHeight, NumberOfChannels;
@@ -10,13 +10,13 @@ Engine::Texture::Texture(const char* image_path) {
 	check(glActiveTexture(GL_TEXTURE0));
 	check(glBindTexture(GL_TEXTURE_2D, m_Texture));
 
-	check(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
-	check(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
+	check(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+	check(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
 
 	check(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
 	check(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
 
-	check(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, ImageWidth, ImageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_Bytes));
+	check(glTexImage2D(GL_TEXTURE_2D, 0, image_type, ImageWidth, ImageHeight, 0, image_type, GL_UNSIGNED_BYTE, m_Bytes));
 
 	check(glGenerateMipmap(GL_TEXTURE_2D));
 

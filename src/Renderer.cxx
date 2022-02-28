@@ -6,6 +6,7 @@ Engine::Renderer::Renderer(Window* window) {
 	gladLoadGL();
 
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_MULTISAMPLE);
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);

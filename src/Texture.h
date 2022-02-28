@@ -11,7 +11,7 @@ namespace Engine {
 		unsigned char* m_Bytes;
 
 	public:
-		Texture(const char* image_path);
+		Texture(const char* image_path, int colour_encoding = GL_RGB);
 
 		void Bind();
 		void Unbind();

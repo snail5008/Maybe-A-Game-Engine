@@ -1,11 +1,12 @@
 #include "Window.h"
 
-Engine::Window::Window(int width, int height, std::string title) {
+Engine::Window::Window(int width, int height, std::string title, int samples) {
 	glfwInit();
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_SAMPLES, samples);
 	m_Window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
 	
 	m_Width = width;
@@ -81,4 +82,12 @@ void Engine::Window::Update() {
 	SwapBuffers();
 	PollEvents();
 	UpdateSize();
+}
+
+void Engine::Window::CaptureMouse() {
+	glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+}
+
+void Engine::Window::UncaptureMouse() {
+	glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }

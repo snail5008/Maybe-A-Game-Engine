@@ -42,10 +42,24 @@ void Engine::Mesh3D::BindAll() {
 	VertexBufferObject.Bind();
 }
 
+
+void Engine::Mesh3D::Scale(float x, float y, float z) {
+	m_ModelMatrix = glm::scale(m_ModelMatrix, glm::vec3(x, y, z));
+}
+
+void Engine::Mesh3D::Translate(float x, float y, float z) {
+	m_ModelMatrix = glm::translate(m_ModelMatrix, glm::vec3(x, y, z));
+}
+
+
 int Engine::Mesh3D::Size() {
 	return m_Size;
 }
 
 bool Engine::Mesh3D::UsingIndices() {
 	return m_UsingElementBuffer;
+}
+
+float* Engine::Mesh3D::GetModelTransform() {
+	return glm::value_ptr(m_ModelMatrix);
 }

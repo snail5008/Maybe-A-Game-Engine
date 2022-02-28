@@ -21,7 +21,7 @@ namespace Engine {
 		
 
 	public:
-		Window(int, int, std::string);
+		Window(int, int, std::string, int=4);
 		~Window();
 
 		GLFWwindow* GetGLFWwindow();
@@ -40,6 +40,8 @@ namespace Engine {
 		void EnableVsync();
 		void UpdateSize();
 		void UpdateMouseLocation();
+		void CaptureMouse();
+		void UncaptureMouse();
 
 		void Update();
 	};
