@@ -78,7 +78,7 @@ int main() {
 	Engine::Mesh3D Mesh;
 	Engine::Camera Camera(glm::vec3(0.0f));
 
-	Shader.Compile(Engine::IO::ReadFile("res/default_vertex.glsl"), Engine::IO::ReadFile("res/default_fragment.glsl"));
+	Shader.Compile(Engine::IO::ReadFile("res/shaders/default_vertex.glsl"), Engine::IO::ReadFile("res/shaders/default_fragment.glsl"));
 	Shader.Use();
 
 	Mesh.SetVertexData(cube, sizeof(cube), GL_STATIC_DRAW);
