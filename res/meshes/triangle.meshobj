@@ -1,0 +1,13 @@
+/set VERSION 0
+/set COMPONENTS_PER_VECTOR 3
+
+/section vertices
+ 0.0  0.5  0.0
+ 0.5 -0.5  0.0
+-0.5 -0.5  0.0
+
+/section attributes
+3
+
+/section indices
+NONE

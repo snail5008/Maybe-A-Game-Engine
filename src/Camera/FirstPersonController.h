@@ -36,5 +36,7 @@ namespace Engine {
 		bool CheckIfCaptured();
 		void Capture();
 		void Uncapture();
+
+		Engine::Camera* GetCamera();
 	};
 }

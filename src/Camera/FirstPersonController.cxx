@@ -90,3 +90,7 @@ void Engine::FirstPersonController::Uncapture() {
 	m_Window->UncaptureMouse();
 	m_IsCaptured = false;
 }
+
+Engine::Camera* Engine::FirstPersonController::GetCamera() {
+	return m_Camera;
+}

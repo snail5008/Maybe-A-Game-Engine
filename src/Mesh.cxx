@@ -51,6 +51,10 @@ void Engine::Mesh3D::Translate(float x, float y, float z) {
 	m_ModelMatrix = glm::translate(m_ModelMatrix, glm::vec3(x, y, z));
 }
 
+void Engine::Mesh3D::UseShader(Shader* S) {
+	S->SetUniformMatrix4f(S->GetUniformLocation("model"), glm::value_ptr(m_ModelMatrix));
+}
+
 
 int Engine::Mesh3D::Size() {
 	return m_Size;
@@ -60,6 +64,6 @@ bool Engine::Mesh3D::UsingIndices() {
 	return m_UsingElementBuffer;
 }
 
-float* Engine::Mesh3D::GetModelTransform() {
-	return glm::value_ptr(m_ModelMatrix);
+glm::mat4 Engine::Mesh3D::GetModelTransform() {
+	return m_ModelMatrix;
 }

@@ -76,7 +76,7 @@ int main() {
 	Engine::Renderer Renderer(&Window);
 	Engine::Shader Shader;
 	Engine::Mesh3D Mesh;
-	Engine::Camera Camera(glm::vec3(0.0f));
+	Engine::Camera Camera(glm::vec3(0.0f, 0.0f, 2.0f));
 
 	Shader.Compile(Engine::IO::ReadFile("res/shaders/default_vertex.glsl"), Engine::IO::ReadFile("res/shaders/default_fragment.glsl"));
 	Shader.Use();
@@ -90,15 +90,16 @@ int main() {
 
 	Engine::Texture Texture("res/textures/stone.png", GL_RGB);
 	Texture.Bind();
-
 	Shader.SetUniform1i(Shader.GetUniformLocation("tex"), 0);
 
 	Engine::FirstPersonController FPSController(&Camera, &Window, 45.0f, 0.1f, 100.0f, 0.1f);
+	Mesh.UseShader(&Shader);
 
 	while (!Window.ShouldClose()) {
-
 		Renderer.ClearColor(0, 0, 0);
+
 		Renderer.DrawMesh3D(Mesh, 36);
+
 
 		Window.Update();
 

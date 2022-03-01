@@ -35,11 +35,14 @@ namespace Engine {
 
 		void Scale(float x, float y, float z);
 		void Translate(float x, float y, float z);
+		void UseShader(Shader* S);
 
 		int Size();
 
 		bool UsingIndices();
 
-		float* GetModelTransform();
+		glm::mat4 GetModelTransform();
+
+		float* ParseFile();
 	};
 }
