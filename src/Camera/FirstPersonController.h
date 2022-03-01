@@ -8,6 +8,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+// THIS IS A DEBUG CHARACTER CONTROLLER; USE ONLY FOR TESTING
+
 namespace Engine {
 	class FirstPersonController {
 	private:

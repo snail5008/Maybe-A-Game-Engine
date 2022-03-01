@@ -1,7 +1,7 @@
 #include "Window.h"
 #include "Renderer.h"
 #include "Shader.h"
-#include "Mesh.h"
+#include "Rendering/Mesh.h"
 #include "Texture.h"
 #include "Camera/Camera.h"
 #include "Camera/FirstPersonController.h"

@@ -5,8 +5,8 @@
 #include <string>
 
 #include "CheckOpenGLCalls.h"
-#include "Logger.h"
-#include "Formatter.h"
+#include "Debugging/Logger.h"
+#include "Debugging/Formatter.h"
 
 namespace Engine {
 	class Shader {

@@ -5,8 +5,8 @@
 #include <fstream>
 #include <sstream>
 
-#include "Logger.h"
-#include "Formatter.h"
+#include "Debugging/Logger.h"
+#include "Debugging/Formatter.h"
 
 namespace Engine {
 	namespace IO {

@@ -72,8 +72,7 @@ void Engine::FirstPersonController::Update() {
 	}
 
 	int state = glfwGetMouseButton(m_Window->GetGLFWwindow(), GLFW_MOUSE_BUTTON_LEFT);
-	if (state == GLFW_PRESS)
-	{
+	if (state == GLFW_PRESS) {
 		m_Window->CaptureMouse();
 		m_IsCaptured = true;
 	}
