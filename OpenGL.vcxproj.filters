@@ -46,7 +46,7 @@
     <ClCompile Include="src\Debugging\Formatter.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="third_party\stb\stb_image.cxx">
+    <ClCompile Include="src\stb_image.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\OpenGL\Texture.cxx">

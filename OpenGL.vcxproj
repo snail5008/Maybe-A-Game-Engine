@@ -173,7 +173,7 @@
     <ClCompile Include="src\OpenGL\VAO.cxx" />
     <ClCompile Include="src\Window.cxx" />
     <ClCompile Include="third_party\glad\src\glad.c" />
-    <ClCompile Include="third_party\stb\stb_image.cxx" />
+    <ClCompile Include="src\stb_image.cxx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Camera\Camera.h" />
