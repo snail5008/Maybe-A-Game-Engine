@@ -1,16 +1,15 @@
 #include "Window.h"
 #include "Renderer.h"
-#include "Shader.h"
-#include "Rendering/Mesh.h"
-#include "Texture.h"
+
+#include "OpenGL/Shader.h"
+#include "OpenGL/Texture.h"
+
+#include "Mesh.h"
+
 #include "Camera/Camera.h"
 #include "Camera/FirstPersonController.h"
 
 #include "InputOutput.h"
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 float quad[] = {
 //       positions         tex coords
@@ -94,19 +93,9 @@ int main() {
 
 	Shader.SetUniform1i(Shader.GetUniformLocation("tex"), 0);
 
-	
-	double OldMouseX = Window.GetMouseX();
-	double OldMouseY = Window.GetMouseY();
-	float yaw = 0.0f;
-	float pitch = 0.0f;
-	float speed = 0.05f;
-
 	Engine::FirstPersonController FPSController(&Camera, &Window, 45.0f, 0.1f, 100.0f, 0.1f);
 
 	while (!Window.ShouldClose()) {
-		
-		OldMouseX = Window.GetMouseX();
-		OldMouseY = Window.GetMouseY();
 
 		Renderer.ClearColor(0, 0, 0);
 		Renderer.DrawMesh3D(Mesh, 36);

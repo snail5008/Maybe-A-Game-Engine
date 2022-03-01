@@ -1,12 +1,11 @@
 #pragma once
 
 #include "Window.h"
-#include "VAO.h"
 #include "Mesh.h"
 
 #include <GLFW/glfw3.h>
 
-#include "CheckOpenGLCalls.h"
+#include "OpenGL/CheckOpenGLCalls.h"
 
 
 namespace Engine {

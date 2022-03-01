@@ -1,9 +1,9 @@
 #pragma once
 
-#include "VAO.h"
-#include "VBO.h"
-#include "EBO.h"
-#include "Shader.h"
+#include "OpenGL/VAO.h"
+#include "OpenGL/VBO.h"
+#include "OpenGL/EBO.h"
+#include "OpenGL/Shader.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>

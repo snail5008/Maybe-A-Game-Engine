@@ -3,8 +3,8 @@
 #include <iostream>
 #include <glad/glad.h>
 
-#include "Debugging/Logger.h"
-#include "Debugging/Formatter.h"
+#include "../Debugging/Logger.h"
+#include "../Debugging/Formatter.h"
 
 #ifdef _DEBUG
 #define check(fn) ClearErrors();fn;GetError(__func__, __FILE__, __LINE__)

@@ -6,7 +6,7 @@
 #include <glm/gtx/rotate_vector.hpp>
 #include <glm/gtx/vector_angle.hpp>
 
-#include "../Shader.h"
+#include "../OpenGL/Shader.h"
 
 namespace Engine {
 	class Camera {

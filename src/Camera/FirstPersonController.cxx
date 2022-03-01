@@ -38,7 +38,6 @@ void Engine::FirstPersonController::Update() {
 		m_Camera->Direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
 		m_Camera->Direction.y = sin(glm::radians(pitch));
 		m_Camera->Direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-		Engine::Logger::Info(Engine::Format("Relative Mouse: x:#i y:#i", m_Window->GetMouseX() - OldMouseX, m_Window->GetMouseY() - OldMouseY));
 
 		OldMouseX = m_Window->GetMouseX();
 		OldMouseY = m_Window->GetMouseY();
